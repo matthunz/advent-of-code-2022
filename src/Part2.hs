@@ -1,6 +1,4 @@
-module Part2 (solve2a) where
-
-import System.IO
+module Part2 (solve2a, solve2b) where
 
 data Move = Rock | Paper | Scissors
 
@@ -16,24 +14,12 @@ parseTheirMove line = case line of
   "B" -> Paper
   _ -> Scissors
 
-parseYourMove :: String -> Move
-parseYourMove line = case line of
-  "X" -> Rock
-  "Y" -> Paper
-  _ -> Scissors
-
 data Turn = Turn
   { yourMove :: Move,
     theirMove :: Move
   }
 
 data Outcome = Win | Loss | Tie
-
-outcomeScore :: Outcome -> Int
-outcomeScore o = case o of
-  Win -> 6
-  Tie -> 3
-  Loss -> 0
 
 outcome :: Turn -> Outcome
 outcome turn = case turn of
@@ -46,7 +32,11 @@ outcome turn = case turn of
   _ -> Tie
 
 score :: Turn -> Int
-score turn = mvScore + outcomeScore (outcome turn)
+score turn =
+  mvScore + case outcome turn of
+    Win -> 6
+    Tie -> 3
+    Loss -> 0
   where
     mvScore = moveScore $ yourMove turn
 
@@ -55,7 +45,34 @@ parseLine line = Turn you them
   where
     w = words line
     them = parseTheirMove $ head w
-    you = parseYourMove $ w !! 1
+    you = case w !! 1 of
+      "X" -> Rock
+      "Y" -> Paper
+      _ -> Scissors
 
 solve2a :: String -> Int
 solve2a input = sum $ map (score . parseLine) (lines input)
+
+solve2b :: String -> Int
+solve2b input = sum $ map (score . turnB . parseLineB) (lines input)
+  where
+    parseLineB line = (you, them)
+      where
+        w = words line
+        them = parseTheirMove $ head w
+        you = case w !! 1 of
+          "X" -> Loss
+          "Y" -> Tie
+          _ -> Win
+    turnB (out, move) = Turn yourMove move
+      where
+        yourMove = case out of
+          Win -> case move of
+            Rock -> Paper
+            Paper -> Scissors
+            Scissors -> Rock
+          Loss -> case move of
+            Rock -> Scissors
+            Paper -> Rock
+            Scissors -> Paper
+          Tie -> move

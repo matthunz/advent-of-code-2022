@@ -2,6 +2,7 @@ module Lib
   ( solve1a,
     solve1b,
     solve2a,
+    solve1b,
     run
   )
 where
