@@ -4,6 +4,5 @@ import Lib
 
 main :: IO ()
 main = do 
-    n <- solve1a
+    n <- run "2" solve2a
     print n
-   
