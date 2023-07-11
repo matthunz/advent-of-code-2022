@@ -5,19 +5,15 @@ module Part1
 where
 
 import Data.List (sort)
-import System.IO
 
-solve1a :: IO Int
-solve1a = maximum <$> readCalories
+solve1a :: String -> Int
+solve1a input = maximum $ readCalories input
 
-solve1b :: IO Int
+solve1b :: String -> Int
 solve1b = sum . take 3 . reverse . sort <$> readCalories
 
-readCalories :: IO [Int]
-readCalories = do
-  handle <- openFile "input/1" ReadMode
-  contents <- hGetContents handle
-  pure $ calculateCalories (lines contents)
+readCalories :: String -> [Int]
+readCalories input = calculateCalories (lines input)
   where
     calculateCalories fileLines = x : xs
       where

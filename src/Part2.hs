@@ -33,9 +33,9 @@ score turn =
       _ -> Tie
 
 solve :: (Move -> String -> Move) -> String -> Int
-solve makeMove input = sum $ map (score . p) (lines input)
+solve makeMove input = sum $ map (score . turnOf) (lines input)
   where
-    p line = Turn you them
+    turnOf line = Turn you them
       where
         w = words line
         them = case head w of

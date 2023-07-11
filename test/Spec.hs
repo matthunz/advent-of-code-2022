@@ -9,7 +9,7 @@ test name expected f = do
 
 main :: IO ()
 main = do
-  test "part1a" 69281 solve1a
-  test "part1b" 201524 solve1b
+  test "part1a" 69281 (run "1" solve1a)
+  test "part1b" 201524 (run "1" solve1b)
   test "part2a" 14069 (run "2" solve2a)
   test "part2b" 12411 (run "2" solve2b)
