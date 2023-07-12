@@ -2,12 +2,6 @@ module Part2 (solve2a, solve2b) where
 
 data Move = Rock | Paper | Scissors
 
-moveScore :: Move -> Int
-moveScore move = case move of
-  Rock -> 1
-  Paper -> 2
-  Scissors -> 3
-
 data Turn = Turn
   { yourMove :: Move,
     theirMove :: Move
@@ -22,7 +16,10 @@ score turn =
     Tie -> 3
     Loss -> 0
   where
-    mvScore = moveScore $ yourMove turn
+    mvScore = case yourMove turn of
+      Rock -> 1
+      Paper -> 2
+      Scissors -> 3
     outcome = case turn of
       Turn Rock Paper -> Loss
       Turn Rock Scissors -> Win

@@ -28,6 +28,7 @@ library
       Lib
       Part1
       Part2
+      Part3
   other-modules:
       Paths_aoc
   hs-source-dirs:
